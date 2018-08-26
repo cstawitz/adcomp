@@ -1177,7 +1177,7 @@ extern "C"
       }
       parallelADFun<double>* ppf=new parallelADFun<double>(pfvec);
       /* Convert parallel ADFun pointer to R_ExternalPtr */
-      PROTECT(res=R_MakeExternalPtr((void*) ppf,Rf_mkChar("parallelADFun"),R_NilValue));
+      PROTECT(res=R_MakeExternalPtr((void*) ppf,Rf_install("parallelADFun"),R_NilValue));
       R_RegisterCFinalizer(res,finalizeparallelADFun);
 #endif
     } else { // Serial mode
@@ -1192,7 +1192,7 @@ extern "C"
 	TMB_ERROR_BAD_ALLOC;
       }
       /* Convert ADFun pointer to R_ExternalPtr */
-      PROTECT(res=R_MakeExternalPtr((void*) pf,Rf_mkChar("ADFun"),R_NilValue));
+      PROTECT(res=R_MakeExternalPtr((void*) pf,Rf_install("ADFun"),R_NilValue));
       Rf_setAttrib(res,Rf_install("range.names"),info);
       R_RegisterCFinalizer(res,finalizeADFun);
     }
@@ -1307,7 +1307,7 @@ extern "C"
 
     /* Convert DoubleFun pointer to R_ExternalPtr */
     SEXP res,ans;
-    PROTECT(res=R_MakeExternalPtr((void*) pF,Rf_mkChar("DoubleFun"),R_NilValue));
+    PROTECT(res=R_MakeExternalPtr((void*) pF,Rf_install("DoubleFun"),R_NilValue));
     R_RegisterCFinalizer(res,finalizeDoubleFun);
     PROTECT(ans=ptrList(res));
     UNPROTECT(2);
@@ -1442,7 +1442,7 @@ extern "C"
       }
       parallelADFun<double>* ppf=new parallelADFun<double>(pfvec);
       /* Convert parallel ADFun pointer to R_ExternalPtr */
-      PROTECT(res=R_MakeExternalPtr((void*) ppf,Rf_mkChar("parallelADFun"),R_NilValue));
+      PROTECT(res=R_MakeExternalPtr((void*) ppf,Rf_install("parallelADFun"),R_NilValue));
       R_RegisterCFinalizer(res,finalizeparallelADFun);
 #endif
     } else { // Serial mode
@@ -1457,7 +1457,7 @@ extern "C"
 	TMB_ERROR_BAD_ALLOC;
       }
       /* Convert ADFun pointer to R_ExternalPtr */
-      PROTECT(res=R_MakeExternalPtr((void*) pf,Rf_mkChar("ADFun"),R_NilValue));
+      PROTECT(res=R_MakeExternalPtr((void*) pf,Rf_install("ADFun"),R_NilValue));
       R_RegisterCFinalizer(res,finalizeADFun);
     }
 
@@ -1569,7 +1569,7 @@ SEXP asSEXP(const sphess_t<ADFunType> &H, const char* tag)
     par=R_NilValue;
     /* Convert ADFun pointer to R_ExternalPtr */
     SEXP res;
-    PROTECT( res = R_MakeExternalPtr((void*) H.pf, Rf_mkChar(tag), R_NilValue) );
+    PROTECT( res = R_MakeExternalPtr((void*) H.pf, Rf_install(tag), R_NilValue) );
     R_RegisterCFinalizer(res, finalize<ADFunType>);
     /* Return list */
     SEXP ans;
