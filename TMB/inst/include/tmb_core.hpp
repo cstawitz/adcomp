@@ -1240,12 +1240,12 @@ extern "C"
   SEXP optimizeADFunObject(SEXP f)
   {
     SEXP tag=R_ExternalPtrTag(f);
-    if(!strcmp(CHAR(tag), "ADFun")){
+    if(tag == Rf_install("ADFun")){
       ADFun<double>* pf;
       pf=(ADFun<double>*)R_ExternalPtrAddr(f);
       pf->optimize();
     }
-    if(!strcmp(CHAR(tag), "parallelADFun")){
+    if(tag == Rf_install("parallelADFun")){
       parallelADFun<double>* pf;
       pf=(parallelADFun<double>*)R_ExternalPtrAddr(f);
       pf->optimize();      
@@ -1263,9 +1263,9 @@ extern "C"
     TMB_TRY {
       if(Rf_isNull(f))Rf_error("Expected external pointer - got NULL");
       SEXP tag=R_ExternalPtrTag(f);
-      if(!strcmp(CHAR(tag), "ADFun"))
+      if(tag == Rf_install("ADFun"))
 	return EvalADFunObjectTemplate<ADFun<double> >(f,theta,control);
-      if(!strcmp(CHAR(tag), "parallelADFun"))
+      if(tag == Rf_install("parallelADFun"))
 	return EvalADFunObjectTemplate<parallelADFun<double> >(f,theta,control);
       Rf_error("NOT A KNOWN FUNCTION POINTER");
     }
@@ -1657,12 +1657,12 @@ extern "C"
 {
   void tmb_forward(SEXP f, const Eigen::VectorXd &x, Eigen::VectorXd &y) {
     SEXP tag=R_ExternalPtrTag(f);
-    if(!strcmp(CHAR(tag), "ADFun")) {
+    if(tag == Rf_install("ADFun")) {
       ADFun<double>* pf;
       pf = (ADFun<double>*) R_ExternalPtrAddr(f);
       y = pf->Forward(0, x);
     } else
-      if(!strcmp(CHAR(tag), "parallelADFun")) {
+      if(tag == Rf_install("parallelADFun")) {
         parallelADFun<double>* pf;
         pf = (parallelADFun<double>*) R_ExternalPtrAddr(f);
         y = pf->Forward(0, x);
@@ -1671,12 +1671,12 @@ extern "C"
   }
   void tmb_reverse(SEXP f, const Eigen::VectorXd &v, Eigen::VectorXd &y) {
     SEXP tag=R_ExternalPtrTag(f);
-    if(!strcmp(CHAR(tag), "ADFun")) {
+    if(tag == Rf_install("ADFun")) {
       ADFun<double>* pf;
       pf = (ADFun<double>*) R_ExternalPtrAddr(f);
       y = pf->Reverse(1, v);
     } else
-      if(!strcmp(CHAR(tag), "parallelADFun")) {
+      if(tag == Rf_install("parallelADFun")) {
         parallelADFun<double>* pf;
         pf = (parallelADFun<double>*) R_ExternalPtrAddr(f);
         y = pf->Reverse(1, v);
